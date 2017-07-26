@@ -10,9 +10,9 @@ namespace plt = matplotlibcpp;
 
 using CppAD::AD;
 
-// TODO: Set N and dt
-size_t N = ? ;
-double dt = ? ;
+// TO_DID: Set N and dt
+size_t N = 10;
+double dt = 0.5;
 
 // This value assumes the model presented in the classroom is used.
 //
@@ -262,18 +262,20 @@ int main() {
   ptsx << -100, 100;
   ptsy << -1, -1;
 
-  // TODO: fit a polynomial to the above x and y coordinates
-  auto coeffs = ? ;
+  // TO_DID: fit a polynomial to the above x and y coordinates
+  auto coeffs = polyfit(ptsx, ptsy, 1);
 
   // NOTE: free feel to play around with these
   double x = -1;
   double y = 10;
   double psi = 0;
   double v = 10;
-  // TODO: calculate the cross track error
-  double cte = ? ;
-  // TODO: calculate the orientation error
-  double epsi = ? ;
+  
+  // TO_DID: calculate the cross track error
+  double fx = polyeval(coeffs, x);
+  double cte = fx - y;
+  // TO_DID: calculate the orientation error
+  double epsi = psi - atan(fx);
 
   Eigen::VectorXd state(6);
   state << x, y, psi, v, cte, epsi;
