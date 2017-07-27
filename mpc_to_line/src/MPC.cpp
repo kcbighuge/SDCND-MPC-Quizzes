@@ -72,8 +72,9 @@ class FG_eval {
     }
 
     // Value gap between sequential Actuator Cost
+    const int DELTA_SMOOTH = 360; // keep sequential steering
     for (int t=0; t < N-2; ++t) {
-      fg[0] += CppAD::pow(vars[delta_start+t+1] - vars[delta_start+t], 2);
+      fg[0] += DELTA_SMOOTH*CppAD::pow(vars[delta_start+t+1] - vars[delta_start+t], 2);
       fg[0] += CppAD::pow(vars[a_start+t+1] - vars[a_start+t], 2);
     }
 
@@ -359,13 +360,14 @@ int main() {
   // Plot values
   // NOTE: feel free to play around with this.
   // It's useful for debugging!
-  plt::subplot(3, 1, 1);
+  plt::subplot(1, 3, 1);
   plt::title("CTE");
   plt::plot(cte_vals);
-  plt::subplot(3, 1, 2);
+  plt::subplot(1, 3, 2);
   plt::title("Delta (Radians)");
+  plt::ylim(-M_PI/2, M_PI/2);
   plt::plot(delta_vals);
-  plt::subplot(3, 1, 3);
+  plt::subplot(1, 3, 3);
   plt::title("Velocity");
   plt::plot(v_vals);
 
